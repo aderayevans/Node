@@ -1,0 +1,13 @@
+#include <iostream>
+#include "LIST2a.h"
+
+int main() {
+    List L;
+    MAKENULL_LIST(L);
+    READ_LIST(L);
+    PRINT_LIST(L);
+    std::cout << "Phan tu " << RETRIEVE(LOCATE(5, L), L);
+    std::cout << "\nDeleting..\n";
+    DELETE_LIST(LOCATE(8, L), L);
+    PRINT_LIST(L);
+}
