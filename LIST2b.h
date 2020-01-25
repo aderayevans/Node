@@ -20,7 +20,10 @@ Position LOCATE(ElementType x, List L) {
     return L;
 }
 ElementType RETRIEVE(Position p, List L) {
-    return p->Next->Element;
+    if (p->Next != NULL)
+        return p->Next->Element;
+    std::cout << "Position Not Found!!!";
+    return 0;
 }
 void DELETE_LIST(Position p, List &L) {
     //In essence, we're working on, p->Next = P->Next->Next;
