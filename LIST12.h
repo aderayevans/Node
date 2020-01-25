@@ -71,7 +71,7 @@ void READ_LIST(List &L) {
                 break;
             }
             else {
-                std::cout << "ValueError!!!\nThe denominator CANNOT have the value zero.\n"
+                std::cout << "ValueError!!!\nThe denominator CANNOT have the value zero.\n";
             }
         }
         INSERT_LIST(x, ENDLIST(L), L);
