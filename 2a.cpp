@@ -89,15 +89,69 @@ void ADVANCED_INPUT_LIST(List &L) {
         ADVANCED_ADD_LIST(x, L);
     }
 }
+void MIX_LISTS(List L1, List L2, List &L3) {
+    Position p1 = L1, p2 = L2, p3 = L3;
+    while (p1->Next != NULL && p2->Next != NULL) {
+        if (p1->Next != NULL && p2->Next == NULL) {
+            INSERT_LIST(p1->Next->Element, p3, L3);
+            p1 = p1->Next;
+            p3 = p3->Next;
+        }
+        else if (p1->Next == NULL && p2->Next != NULL) {
+            INSERT_LIST(p2->Next->Element, p3, L3);
+            p2 = p2->Next;
+            p3 = p3->Next;
+        }
+        else {
+            if (p1->Next->Element > p2->Next->Element) {
+                INSERT_LIST(p2->Next->Element, p3, L3);
+                p2 = p2->Next;
+                p3 = p3->Next;
+            }
+            else if (p1->Next->Element == p2->Next->Element) {
+                INSERT_LIST(p2->Next->Element, p3, L3);
+                p1 = p1->Next;
+                p2 = p2->Next;
+                p3 = p3->Next;
+            }
+            else {
+                INSERT_LIST(p1->Next->Element, p3, L3);
+                p1 = p1->Next;
+                p3 = p3->Next;
+            }
+        }
+    }
+}
+void DEL_ODDNUMBER(List &L) {
+    List temp;
+    MAKENULL_LIST(temp);
+    Position pass = L;
+    while (pass->Next != NULL) {
+        if (pass->Next->Element % 2 == 0) {
+            INSERT_LIST(pass->Next->Element, ENDLIST(temp), temp);
+        }
+        pass = pass->Next;
+    }
+    L = temp;
+}
+void SPLIT_ODD_LIST(List L, List L1, List L2) {
+    Position pass = L;
+    while (pass->Next != NULL) {
+        if (pass->Next->Element % 2 == 0) {
+            INSERT_LIST(pass->Next->Element, ENDLIST(L1), L1);
+        }
+        else INSERT_LIST(pass->Next->Element, ENDLIST(L2), L2);
+        pass = pass->Next;
+    }
+}
 int main() {
-    List L;
-    MAKENULL_LIST(L);
-//    INPUT_LIST(L);
-    ADVANCED_INPUT_LIST(L);
-    PRINT_LIST(L);
-    ADD_LIST(40, L);
-    PRINT_LIST(L);
-//    DEL_ELEMENT(40, L);
-    DEL_DUP(L);
-    PRINT_LIST(L);
+    List L1, L2, L3;
+    MAKENULL_LIST(L1);
+    MAKENULL_LIST(L2);
+    MAKENULL_LIST(L3);
+    ADVANCED_INPUT_LIST(L1);
+    PRINT_LIST(L1);
+    SPLIT_ODD_LIST(L1, L2, L3);
+    PRINT_LIST(L2);
+    PRINT_LIST(L3);
 }
