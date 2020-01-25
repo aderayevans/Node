@@ -25,9 +25,8 @@ ElementType RETRIEVE(Position p, List L) {
 void DELETE_LIST(Position p, List &L) {
     //In essence, we're working on, p->Next = P->Next->Next;
     //But we need to delete the pointer that contain p->Next->Element;
-    Position temp;
     if (p->Next != NULL) {
-        temp = p->Next;
+        Position temp = p->Next;
         p->Next = temp->Next;
         delete temp;
     }
