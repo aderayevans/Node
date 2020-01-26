@@ -72,7 +72,7 @@ void DEL_DUP(List &L) {
             if (first->Next->Element == second->Next->Element) {
                 DELETE_LIST(second, L);
             }
-            second = second->Next;
+            else second = second->Next;
         }
         first = first->Next;
         second = first->Next;

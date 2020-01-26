@@ -1,4 +1,5 @@
 #include <iostream>
+#include "LIST2b.h"
 struct Fraction { //Phan so
     int Numerator; //Tu so
     int Denominator; //Mau so
@@ -92,4 +93,98 @@ void PRINT_LIST(List L) {
         std::cout << std::endl;
         temp = temp->Next;
     }
+}
+intList PrimeNumber(int n) {
+    intList Primes;
+    MAKENULL_intList(Primes);
+    INSERT_intList(1, ENDintList(Primes), Primes);
+    while (n>1) {
+		if (n%2 == 0) {
+			n = n/2;
+			INSERT_intList(2, ENDintList(Primes), Primes);
+		}
+		else if (n%3 == 0) {
+			n = n/3;
+			INSERT_intList(3, ENDintList(Primes), Primes);
+		}	
+		else if (n%5 == 0) {
+			n = n/5;
+			INSERT_intList(5, ENDintList(Primes), Primes);
+		}	
+		else if (n%7 == 0) {
+			n = n/7;
+			INSERT_intList(7, ENDintList(Primes), Primes);
+		}
+        else
+			INSERT_intList(n, ENDintList(Primes), Primes);
+	}
+    return Primes;
+}
+int GCD(int number1, int number2){
+    intList L1 = PrimeNumber(number1);
+    intList L2 = PrimeNumber(number2);
+    int result = 1;
+    while (L1->Next != NULL && L2->Next != NULL) {
+        if (L1->Next->Element == L2->Next->Element) {
+            result = result*L1->Next->Element;
+            L1 = L1->Next;
+            L2 = L2->Next;
+        }
+        else if (L1->Next->Element > L2->Next->Element) {
+            L2 = L2->Next;
+        }
+        else L1 = L1->Next;
+    }
+    return result;
+}
+void REDUCE_FRACTION(List &L) {
+    Position p = L;
+    int gcd;
+    while (p->Next != NULL) {
+        if (p->Next->Element.Numerator == 0) {
+            p->Next->Element.Numerator = 0;
+        }
+        else {
+            gcd = GCD(p->Next->Element.Numerator, p->Next->Element.Denominator);
+            p->Next->Element.Numerator = p->Next->Element.Numerator/gcd;
+            p->Next->Element.Denominator = p->Next->Element.Denominator/gcd;
+        }
+        p = p->Next;
+    }
+}
+void DEL_BIGGER_NUM(List &L) {
+    Position p = L;
+    while (p->Next != NULL) {
+        if (p->Next->Element.Numerator > p->Next->Element.Denominator) DELETE_LIST(p, L);
+        else p = p->Next;
+    }
+}
+Position* SPECIAL_FUNC(List L) {
+    Position* Dual = new Position[2];
+    *(Dual + 0) = new Node();
+    *(Dual + 1) = new Node();
+    
+    Position first = L;
+    Position second = L->Next;
+    int done = 0;
+
+    while (first->Next != NULL) {
+        while (second->Next != NULL) {
+            if (first->Next->Element.Numerator*second->Next->Element.Numerator == first->Next->Element.Denominator*second->Next->Element.Denominator) {
+                *(Dual + 0) = first;
+                *(Dual + 1) = second;
+                done = 1;
+                break;
+            }
+            second = second->Next;
+        }
+        if (done == 1) break;
+        first = first->Next;
+        second = first->Next;
+    }
+    if (done == 0) {
+        *(Dual + 0) = NULL;
+        *(Dual + 1) = NULL;
+    }
+    return Dual;
 }
