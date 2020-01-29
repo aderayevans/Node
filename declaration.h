@@ -1,3 +1,10 @@
+typedef int ElementType;
+struct Node {
+    ElementType Element;
+    Node* Next;
+};
+typedef Node* Position;
+typedef Position List;
 void INSERT_LIST(ElementType x, Position p, List &L);
 Position LOCATE(ElementType x, List L);
 ElementType RETRIEVE(Position p, List L);
